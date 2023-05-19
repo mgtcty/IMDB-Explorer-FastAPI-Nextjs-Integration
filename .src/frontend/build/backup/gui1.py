@@ -11,7 +11,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\kyler\Desktop\GUI\build\assets\frame2")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\kyler\Desktop\New folder (2)\test\assets\frame1")
 
 
 def relative_to_assets(path: str) -> Path:
@@ -55,16 +55,8 @@ image_image_3 = PhotoImage(
     file=relative_to_assets("image_3.png"))
 image_3 = canvas.create_image(
     722.0,
-    610.0,
+    618.0,
     image=image_image_3
-)
-
-image_image_4 = PhotoImage(
-    file=relative_to_assets("image_4.png"))
-image_4 = canvas.create_image(
-    716.0,
-    785.0,
-    image=image_image_4
 )
 
 button_image_1 = PhotoImage(
@@ -77,42 +69,10 @@ button_1 = Button(
     relief="flat"
 )
 button_1.place(
-    x=651.0,
-    y=723.0,
-    width=200.0,
+    x=513.0,
+    y=759.0,
+    width=400.0,
     height=100.0
 )
-
-button_image_2 = PhotoImage(
-    file=relative_to_assets("button_2.png"))
-button_2 = Button(
-    image=button_image_2,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_2 clicked"),
-    relief="flat"
-)
-button_2.place(
-    x=879.0,
-    y=718.0,
-    width=404.0,
-    height=105.0
-)
-
-canvas.create_rectangle(
-    161.0,
-    512.0,
-    1276.0,
-    633.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    156.0,
-    317.0,
-    1276.0,
-    456.0,
-    fill="#000000",
-    outline="")
 window.resizable(False, False)
 window.mainloop()

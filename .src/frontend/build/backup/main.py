@@ -12,41 +12,44 @@ class MainApp:
         self.frame2 = Frame2(self.root, self)
         self.frame1 = Frame1(self.root, self)
 
-        self.current_frame = None  # Track the current active frame
-
         self.show_frame1()
 
     def show_frame1(self):
-        self.hide_current_frame()
+        self.frame5.frame.pack_forget()
+        self.frame3.frame.pack_forget()
+        self.frame2.frame.pack_forget()
+        self.frame4.frame.pack_forget()
         self.frame1.frame.pack()
-        self.current_frame = self.frame1
 
     def show_frame2(self):
-        self.hide_current_frame()
+        self.frame5.frame.pack_forget()
+        self.frame3.frame.pack_forget()
+        self.frame1.frame.pack_forget()
+        self.frame4.frame.pack_forget()
         self.frame2.frame.pack()
-        self.current_frame = self.frame2
 
     def show_frame3(self):
-        self.hide_current_frame()
+        self.frame5.frame.pack_forget()
+        self.frame1.frame.pack_forget()
+        self.frame2.frame.pack_forget()
+        self.frame4.frame.pack_forget()
         self.frame3.frame.pack()
-        self.frame3.reshow_widgets()
-        self.current_frame = self.frame3
-
+    
     def show_frame4(self):
-        self.hide_current_frame()
+        self.frame5.frame.pack_forget()
+        self.frame3.frame.pack_forget()
+        self.frame1.frame.pack_forget()
+        self.frame2.frame.pack_forget()
         self.frame4.frame.pack()
-        self.frame4.reshow_widgets() 
-        self.current_frame = self.frame4
+        self.frame4.reshow_widgets()
 
     def show_frame5(self):
-        self.hide_current_frame()
+        self.frame3.frame.pack_forget()
+        self.frame2.frame.pack_forget()
+        self.frame4.frame.pack_forget()
+        self.frame1.frame.pack_forget()
         self.frame5.frame.pack()
-        self.current_frame = self.frame5
-
-    def hide_current_frame(self):
-        if self.current_frame:
-            self.current_frame.frame.pack_forget()
-
+    
 if __name__ == "__main__":
     root = Tk()
     app = MainApp(root)
