@@ -108,11 +108,9 @@ class Frame2:
             relief="flat"
         )
         self.button2.place(x=224.0, y=635.0, width=450.0, height=120.0)
-
     def switch_to_frame3(self):
             self.frame.pack_forget()
             self.switch_frame.show_frame3()
-
 class Frame3:
     def __init__(self, parent, switch_frame):
         self.parent = parent
@@ -140,7 +138,7 @@ class Frame3:
 
         self.button2_image = PhotoImage(file=relative_to_assets_frame3("button_2.png"))
         self.button_2 = Button(self.frame, image=self.button2_image, borderwidth=0, highlightthickness=0,
-                               command=self.switch_to_frame4)
+                               command=self.switch_to_frame5)
         self.button_2.place(x=879.0, y=723.0, width=400.0, height=100.0)
         custom_font = font.Font(size=35)
         entry_image_1 = PhotoImage(
@@ -199,6 +197,11 @@ class Frame3:
             image=self.image_6
         )
         self.hide = False  # Track if widgets are hidden or not
+     
+    def switch_to_frame5(self):
+        if not self.hide:
+            self.hide_widgets()  # Hide the widgets if not already hidden
+        self.switch_frame.show_frame5() 
 
     def switch_to_frame4(self):
         if not self.hide:
