@@ -1,12 +1,11 @@
 from pathlib import Path
 
 # from tkinter import *
-# Explicit imports to satisfy Flake8
 from tkinter import Canvas, Entry, Button, PhotoImage, font, messagebox
 from functools import partial
 import backend
 
-
+# Used "Path" for easier access of files when desigining th GUI
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH_1 = OUTPUT_PATH / Path(r"assets\frame4")
 ASSETS_PATH_2 = OUTPUT_PATH / Path(r"assets\frame3")
@@ -14,7 +13,7 @@ ASSETS_PATH_3 = OUTPUT_PATH / Path(r"assets\frame2")
 ASSETS_PATH_4 = OUTPUT_PATH / Path(r"assets\frame1")
 ASSETS_PATH_5 = OUTPUT_PATH / Path(r"assets\frame0")
 
-
+#Defined are methods of easily setting the path of the file that is relative
 def relative_to_assets_frame1(path: str) -> Path:
     return ASSETS_PATH_1 / Path(path)
 
@@ -34,12 +33,12 @@ def relative_to_assets_frame4(path: str) -> Path:
 def relative_to_assets_frame5(path: str) -> Path:
     return ASSETS_PATH_5 / Path(path)
 
-
+# Frame1 for the Main Menu of the Application
 class Frame1:
     def __init__(self, parent, switch_frame):
         self.parent = parent
         self.switch_frame = switch_frame
-
+        # General GUI code
         self.frame = Canvas(
             self.parent,
             bg="#394867",
@@ -69,12 +68,12 @@ class Frame1:
             relief="flat"
         )
         self.button1.place(x=462.0, y=639.0, width=495.0, height=147.0)
-
+    # Method for switching to another frame, present in other frames as well
     def switch_to_frame2(self):
-        self.frame.pack_forget()
+        self.frame.pack_forget() # This syntax provides the solution of hiding the current frame, this is also present for every frame switching method
         self.switch_frame.show_frame2()
 
-
+# Frame2 for the option of choosing your role
 class Frame2:
     def __init__(self, parent, switch_frame):
         self.id = None
@@ -83,7 +82,7 @@ class Frame2:
         # initialize the director and actor
         self.director = 0
         self.actor = 1
-
+        # General GUI code
         self.parent = parent
         self.switch_frame = switch_frame
         self.frame = Canvas(
@@ -129,22 +128,23 @@ class Frame2:
         self.button2.place(x=224.0, y=635.0, width=450.0, height=120.0)
 
     def switch_to_frame3(self, role):
-        self.id = backend.get_actor_director(role)
+        self.id = backend.get_actor_director(role) # For passing the input of the user to a variable for easier manipulation
         self.role = role
         self.frame.pack_forget()
-        self.switch_frame.show_frame3()
-
+        self.switch_frame.show_frame3() # Calling the next frame to be shown
+    # For getting what would be the role of the person registering 
     def get_id(self):
         return self.id, self.role
 
-
+# Input fields for name and birthdate
 class Frame3:
     def __init__(self, parent, switch_frame):
+        # Initialized variables for the expected input of the user
         self.name = None
         self.birth = 'null'
         self.movie_id = None
         self.movie_name = None
-
+        # General GUI code
         self.parent = parent
         self.switch_frame = switch_frame
         
@@ -216,7 +216,7 @@ class Frame3:
             image=self.image_6
         )
         self.hide = False  # Track if widgets are hidden or not
-     
+    # Modified method for switching frames to integrate the extraction of data from the input fields and displaying input erros
     def switch_to_frame5(self):
         self.name, birth = self.entry_1.get(), self.entry_2.get()
         if self.name.strip() == '':
@@ -234,7 +234,7 @@ class Frame3:
             self.switch_frame.show_frame5()
         except ValueError:
             messagebox.showerror("Error","Invalid Input. Please enter a valid birthdate.")
-
+    
     def switch_to_frame4(self):
         self.name, birth = self.entry_1.get(), self.entry_2.get()
         if self.name.strip() == '':
@@ -252,7 +252,7 @@ class Frame3:
             self.switch_frame.show_frame4()
         except ValueError:
             messagebox.showerror("Error","Invalid Input. Please enter a valid birthdate.")
-
+    # Methods for getting the required information from the input fields
     def get_name_birth(self):
         return self.name, self.birth
 
@@ -283,10 +283,11 @@ class Frame3:
         )
         self.hide = False
 
-
+#Input field for the movie information of the user
 class Frame4:
     
     def __init__(self, parent, switch_frame):
+        # Initialized variables for the purpose of gathering input
         self.movie_id = None
         self.movie_name = None
         self.ratings = None
@@ -294,7 +295,7 @@ class Frame4:
         self.year = 'null'
         self.parent = parent
         self.switch_frame = switch_frame
-    
+        # General GUI code
         self.frame = Canvas(self.parent, bg="#394867", height=1024, width=1440, bd=0, highlightthickness=0,
                             relief="ridge")
         self.frame.place(x=0, y=0)
@@ -414,6 +415,7 @@ class Frame4:
                 self.hide_widgets()  # Hide the widgets if not already hidden
             self.switch_frame.show_frame5()
         except ValueError:
+            # Prints the error message as a pop up dialog
             messagebox.showerror("Error","Invalid Input. Please enter a float for rating and integer for votes and year.")
 
     def get_movie_data(self):
@@ -426,7 +428,7 @@ class Frame4:
     def reshow_widgets(self):
         if self.hidden:
             self.show_widgets()  # Show the widgets if hidden
-
+    # hiding the widgets so that they don't overlap with other frames
     def hide_widgets(self):
         self.entry_1.place_forget()
         self.entry_2.place_forget()
@@ -468,9 +470,10 @@ class Frame4:
         )
         self.hidden = False
 
-
+#Frame for the finishing of the application
 class Frame5:
     def __init__(self, parent, switch_frame):
+        # General GUI code
         self.parent = parent
         self.switch_frame = switch_frame
         self.frame = Canvas(self.parent, bg="#394867", height=1024, width=1440, bd=0, highlightthickness=0,
@@ -515,7 +518,7 @@ class Frame5:
             width=900.0,
             height=100.0
         )
-
+    # Method to go back to the first frame
     def switch_to_frame1(self):
 
         self.frame.pack_forget()

@@ -3,7 +3,7 @@ from Frames import Frame1, Frame2, Frame3, Frame4, Frame5
 from backend import insert_information
 
 
-class MainApp:
+class MainApp: # Class for the App itself
     def __init__(self, main_root):
         # initialize the inputs to the table
         self.id = None
@@ -67,7 +67,7 @@ class MainApp:
         self.votes = 0
         self.birth = 'null'
         self.movie_year = 'null'
-
+    # Below are methods for the frame switching of the GUI
     def show_frame1(self):
         self.hide_current_frame()
         self.frame1.frame.pack()
