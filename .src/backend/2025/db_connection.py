@@ -1,9 +1,8 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base, relationship
 import json
 
-
-class DbConnection:
+class DbConnection():
     def __init__(self, json_file):
         with open(json_file, "r") as file:
             self.data = json.load(file)
@@ -11,9 +10,16 @@ class DbConnection:
         if not self.data:
             raise Exception("No data found in json file")
         
-        print(self.data)
-        
         self.db_url = f"postgresql://{self.data['user']}:{self.data['password']}@{self.data['host']}:{self.data['port']}/{self.data['database']}"
         self.engine = create_engine(self.db_url)
+
+class Base(declarative_base):
+    pass
+
+class Movies(Base):
+    pass
+
+class Actors(Base):
+    pass
 
 connection = DbConnection('creds.json')
