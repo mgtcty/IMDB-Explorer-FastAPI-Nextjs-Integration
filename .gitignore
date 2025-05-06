@@ -1,7 +1,8 @@
 # Ignore folders and their contents
-.src/backend/2025/csv/
-.src/backend/2025/tsv/
+.src/2025/backend/csv
+.src/2025/backend/tsv
 
 # Ignore specific files
-.src/backend/2025/tsv_csv.py
-.src/backend/2025/creds.json
+.src/2025/backend/tsv_csv.py
+.src/2025/backend/checking_csv.py
+.src/2025/backend/creds.json

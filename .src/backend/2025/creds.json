@@ -1,7 +1,0 @@
-{
-    "user":"IMDB_Master",
-    "password":"IMDB-020103-Master",
-    "host":"imdb-movies.c7a6mgqagkke.ap-southeast-2.rds.amazonaws.com",
-    "port":"5432",
-    "database":"imdb-movies"
-}
