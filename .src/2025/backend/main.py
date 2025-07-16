@@ -23,6 +23,9 @@ def root():
 
 @app.post('/access_db')
 def access_db(creds: Database_Creds):
+    '''
+    Accepts a 
+    '''
     try:
         global GLOBAL_CONNECTION
         creds_data = {
@@ -34,7 +37,7 @@ def access_db(creds: Database_Creds):
         return {'Status': 'Connected'}
     except Exception as e:
         return {
-                'Status': 'Not Connected. Check credentials: user, password, database',
+                'Status': 'Not Connected.',
                 'Error': e
             }
 

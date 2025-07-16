@@ -201,10 +201,10 @@ class DbConnection():
         return result
 
 
-#csv_files = [('csv/filtered_people.csv', 'people'),('csv/filtered_movies.csv', 'movies'),('csv/filtered_ratings.csv', 'ratings') ]
-#with open('creds.json', "r") as file:
-#    data = json.load(file)
-#connection = DbConnection(data)
+csv_files = [('csv/filtered_people.csv', 'people'),('csv/filtered_movies.csv', 'movies'),('csv/filtered_ratings.csv', 'ratings') ]
+with open('creds.json', "r") as file:
+    data = json.load(file)
+connection = DbConnection(data)
 #connection.database_insert_initial_data(csv_files)
-#connection.print_sample_data()
+connection.print_sample_data()
 #connection.delete_all_data()
