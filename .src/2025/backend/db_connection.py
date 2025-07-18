@@ -54,8 +54,9 @@ class DbConnection():
         self.data = data
 
         if not self.data:
-            raise Exception("No data found")
+            raise Exception("Invalid credentials. Check password, database, and username.")
         
+        # Access the AWS RDS using credentials of the user
         self.db_url = f"postgresql://{self.data['user']}:{self.data['password']}@localhost:15432/{self.data['database']}"
         self.engine = create_engine(self.db_url)
         Base.metadata.create_all(self.engine)
@@ -180,7 +181,7 @@ class DbConnection():
 
         print("\n=== Movies ===")
         for movie in self.session.query(Movies).limit(5):
-            print(movie.tconst, movie.primary_title, movie.genres)
+            print(movie.tconst, movie.primary_title, movie.genres, movie.movie_type, movie.is_adult)
 
         print("\n=== Ratings ===")
         for rating in self.session.query(Ratings).limit(5):
@@ -194,6 +195,7 @@ class DbConnection():
     def get_movies_rating(self, is_adult, rating, limit):
         result = self.session.query(
             Movies.primary_title,
+            Movies.movie_type,
             Movies.genres,
             Ratings.ave_rating
         ).join(Ratings, Ratings.tconst == Movies.tconst).filter(Movies.is_adult == is_adult and Ratings.ave_rating > rating).order_by(Ratings.ave_rating.desc()).limit(limit).all()
