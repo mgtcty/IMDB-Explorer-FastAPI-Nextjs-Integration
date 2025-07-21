@@ -62,18 +62,15 @@ class DbConnection():
         Base.metadata.create_all(self.engine)
         self.Session = sessionmaker(bind=self.engine)
         self.session = self.Session()
-        print('setup completed')
 
     def database_insert_initial_data(self, csv_files):
         # Normalize dataframe
         for csv, content in csv_files:
             df = pd.read_csv(csv)
             self.normalize_csv_file(df, content)
-        print('normalization completed')
 
         # Insert into the cloud database's table all initial dataframe
         self.insert_tables()
-        print('insertion completed')
 
     def normalize_csv_file(self, df, content):
         if content == 'people':
@@ -113,7 +110,6 @@ class DbConnection():
                 "genres": "genres"
             }
         )
-        print('\tDone inserting Movies')
 
         self._bulk_insert(
             self.people_known_for_movies_df,
@@ -124,7 +120,6 @@ class DbConnection():
                 "role": "primaryProfession"
             }
         )
-        print('\tDone inserting PeopleKnownForMovie')
 
         self._bulk_insert(
             self.ratings_df,
@@ -135,7 +130,6 @@ class DbConnection():
                 "num_votes": "numVotes"
             }
         )
-        print('\tDone inserting Ratings')
 
     def _bulk_insert(self, df, model_class, field_map, batch_size=1000):
         buffer = []
@@ -151,10 +145,8 @@ class DbConnection():
                 buffer.append(model_class(**kwargs))
 
                 if len(buffer) == batch_size:
-                    print(f'\t\tstarting commit of {index} data')
                     self.session.bulk_save_objects(buffer)
                     self.session.commit()
-                    print('\t\tcommitted')
                     buffer = []
 
             if buffer:
@@ -170,7 +162,6 @@ class DbConnection():
             self.session.query(People).delete()
             self.session.query(Movies).delete()
             self.session.commit()
-            print("All data from People and Movies (and related PeopleKnownForMovie and ratings) deleted.")
         else:
             print("Action cancelled.")
         
@@ -203,10 +194,10 @@ class DbConnection():
         return result
 
 
-csv_files = [('csv/filtered_people.csv', 'people'),('csv/filtered_movies.csv', 'movies'),('csv/filtered_ratings.csv', 'ratings') ]
+'''csv_files = [('csv/filtered_people.csv', 'people'),('csv/filtered_movies.csv', 'movies'),('csv/filtered_ratings.csv', 'ratings') ]
 with open('creds.json', "r") as file:
     data = json.load(file)
 connection = DbConnection(data)
 #connection.database_insert_initial_data(csv_files)
 connection.print_sample_data()
-#connection.delete_all_data()
+#connection.delete_all_data()'''

@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "../components/footer";
-import Header from "../components/header";
+import Footer from "../globalComponents/footer";
+import Header from "../globalComponents/header";
 
 const ActorProfile = () => {
   return (
