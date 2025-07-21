@@ -1,3 +1,4 @@
+import Footer from "./components/footer";
 import Header from "./components/header";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
           RatingDashboard={false}
         />
         <h1>Home</h1>
+        <Footer />
       </div>
     </main>
   );
