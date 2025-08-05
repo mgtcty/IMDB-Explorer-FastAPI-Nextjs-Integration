@@ -4,14 +4,14 @@ import Footer from "../globalComponents/footer";
 
 const RatingDashboard = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header
         Home={false}
         ActorProfile={false}
         MovieExplorer={false}
         RatingDashboard={true}
       />
-      RatingDashboard
+      <main className="flex-1">RatingDashboard</main>
       <Footer />
     </div>
   );

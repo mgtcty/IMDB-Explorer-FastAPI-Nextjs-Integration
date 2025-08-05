@@ -18,27 +18,6 @@ GLOBAL_DB_CONNECTION = None
 def startup_event():
     access_db()
 
-@app.get('/')
-def root():
-    return "Server Open"
-
-@app.post('/get_movies_rating')
-def get_movies_rating(item: Database_Selection):
-    global GLOBAL_DB_CONNECTION
-    data = GLOBAL_DB_CONNECTION.get_movies_rating(item.is_adult, item.rating, item.limit)
-    result = []
-    print(data)
-    print(type(data))
-    for title, genres, rating in data:
-        result.append({
-            'title': title,
-            'genres': genres,
-            'rating': float(rating)
-        })
-    
-    return {'data': result}
-
-    
 def access_db():
     '''
     Access the database given the credentials of the AWS RDS. Make sure that a connection with EC2 is running.
@@ -56,3 +35,23 @@ def access_db():
         print("Database connection initialized.")
     except Exception as e:
         print("Error initializing DB connection:", e)
+
+@app.get('/')
+def root():
+    return "Server Open"
+
+@app.post('/get_movies_rating')
+def get_movies_rating(item: Database_Selection):
+    global GLOBAL_DB_CONNECTION
+    data = GLOBAL_DB_CONNECTION.get_movies_data(item.is_adult, item.rating, item.limit)
+    result = []
+    print(data)
+    print(type(data))
+    for title, genres, rating in data:
+        result.append({
+            'title': title,
+            'genres': genres,
+            'rating': float(rating)
+        })
+    
+    return {'data': result}

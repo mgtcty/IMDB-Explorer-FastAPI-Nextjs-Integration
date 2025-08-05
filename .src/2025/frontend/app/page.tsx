@@ -3,17 +3,17 @@ import Header from "./globalComponents/header";
 
 export default function Home() {
   return (
-    <main>
-      <div>
-        <Header
-          Home={true}
-          ActorProfile={false}
-          MovieExplorer={false}
-          RatingDashboard={false}
-        />
+    <div className="min-h-screen flex flex-col">
+      <Header
+        Home={true}
+        ActorProfile={false}
+        MovieExplorer={false}
+        RatingDashboard={false}
+      />
+      <main className="flex-1">
         <h1>Home</h1>
-        <Footer />
-      </div>
-    </main>
+      </main>
+      <Footer />
+    </div>
   );
 }

@@ -4,14 +4,14 @@ import Header from "../globalComponents/header";
 
 const ActorProfile = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header
         Home={false}
         ActorProfile={true}
         MovieExplorer={false}
         RatingDashboard={false}
       />
-      ActorProfile
+      <main className="flex-1">ActorProfile</main>
       <Footer />
     </div>
   );

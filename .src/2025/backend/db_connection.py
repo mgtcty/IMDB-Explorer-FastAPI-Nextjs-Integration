@@ -183,7 +183,23 @@ class DbConnection():
             print(known.nconst, known.tconst, known.role)
     
     # TODO: Further refine the reading of data, initially capable of two tables only
-    def get_movies_rating(self, is_adult, rating, limit):
+    def get_movies_data(self, is_adult, rating, limit = 50):
+        """
+        Returns a list of movies according to the query made.
+
+        Parameters:
+            is_adult (Boolean): movies are for adult or not.
+            rating (Int): ratings of movie ranging 0 to 10.
+            limit (Int): defaults to 50, must be within the range of 1 to 50 only.
+
+
+        Returns:
+            result(list): List of movies with their title, genres, movie type, rating.
+        """
+        # Validate and handle query
+        if limit > 50:
+            limit = 50
+
         result = self.session.query(
             Movies.primary_title,
             Movies.movie_type,
