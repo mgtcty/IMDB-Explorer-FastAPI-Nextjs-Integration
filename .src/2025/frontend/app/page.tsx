@@ -3,7 +3,7 @@ import Header from "./globalComponents/header";
 
 interface topFivePeople {
   name: String;
-  roles: String[];
+  role: String[];
   count: number;
 }
 
@@ -22,6 +22,39 @@ export default async function Home() {
   const topPeople: topFivePeople[] = await resPeople.json();
   const topMovies: topFiveMovies[] = await resMovies.json();
 
+  // table content
+  const tableContentPeople = topPeople ? (
+    topPeople.map((people, index) => (
+      <tr>
+        <td>{people.name}</td>
+        <td>{people.role?.join(", ")}</td>
+        <td>{people.count}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td>Cant display Name</td>
+      <td>Cant display Role</td>
+      <td>Cant display Count</td>
+    </tr>
+  );
+
+  const tableContentMovies = topMovies ? (
+    topMovies.map((movie, index) => (
+      <tr>
+        <td>{movie.movieName}</td>
+        <td>{movie.genre}</td>
+        <td>{movie.rating}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td>Cant display Title</td>
+      <td>Cant display Genre</td>
+      <td>Cant display Rating</td>
+    </tr>
+  );
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header Home={true} ActorProfile={false} MovieExplorer={false} />
@@ -37,15 +70,7 @@ export default async function Home() {
                 <th>Rating</th>
               </tr>
             </thead>
-            <tbody>
-              {topMovies.map((movie, index) => (
-                <tr key={index}>
-                  <td> {movie.movieName} </td>
-                  <td> {movie.genre} </td>
-                  <td> {movie.rating} </td>
-                </tr>
-              ))}
-            </tbody>
+            <tbody>{tableContentMovies}</tbody>
           </table>
         </div>
         <div>
@@ -55,9 +80,10 @@ export default async function Home() {
               <tr>
                 <th>Actor/Actress</th>
                 <th>Role</th>
+                <th>Count</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>{tableContentPeople}</tbody>
           </table>
         </div>
       </main>
