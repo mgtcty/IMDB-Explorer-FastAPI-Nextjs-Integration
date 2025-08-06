@@ -208,12 +208,83 @@ class DbConnection():
         ).join(Ratings, Ratings.tconst == Movies.tconst).filter(Movies.is_adult == is_adult and Ratings.ave_rating > rating).order_by(Ratings.ave_rating.desc()).limit(limit).all()
 
         return result
+    
+    def top_5_movies(self):
+        """
+        Query a list containing the top 5 movies with their genre and average rating.
+
+        Return: 
+            result(list[dict]): Top 5 movies with their genre ordered by rating.
+        """
+        try:
+            result = []
+            query = self.session.query(
+                Movies.primary_title,
+                Movies.genres,
+                Ratings.ave_rating
+            ).join(Ratings, Ratings.tconst == Movies.tconst).order_by(Ratings.ave_rating.desc()).limit(5).all()
+
+            for title, genre, rating in query:
+                result.append({
+                    'title':title,
+                    'genre':genre,
+                    'rating':float(rating)
+                })
+
+            return result
+        except Exception as e:
+            print("Error in top_5_movies:", e)
+            self.session.rollback() 
+            raise e
+    
+    def top_5_people(self):
+        """
+        Query a list containing the top 5 most known people including their roles and appearance in the database.
+
+        Returns:
+            result(list[dict]): Top 5 most known people ordered by appearance count
+        """
+        try:
+            result = []
+            # Create a subquery that groups by the id and get the number of appearance of each id and the roles of each person
+            sub_query = self.session.query(
+                PeopleKnownForMovie.nconst,
+                func.array_agg(func.distinct(PeopleKnownForMovie.role)).label('roles'),
+                func.count().label('appearance_count')
+            ).group_by(PeopleKnownForMovie.nconst).subquery()
+
+            # Final result having the primary name, role, and count of the top 5 people
+            main_query = self.session.query(
+                People.primary_name,
+                sub_query.c.roles,
+                sub_query.c.appearance_count
+            ).join(sub_query, People.nconst == sub_query.c.nconst).order_by(sub_query.c.appearance_count.desc()).limit(5).all()
+
+            for person_name, role, count in main_query:
+                result.append({
+                    'name':person_name,
+                    'role':role,
+                    'count':count,
+                })
+
+            return result
+        except Exception as e:
+            print("Error in top_5_movies:", e)
+            self.session.rollback() 
+            raise e
 
 
-'''csv_files = [('csv/filtered_people.csv', 'people'),('csv/filtered_movies.csv', 'movies'),('csv/filtered_ratings.csv', 'ratings') ]
-with open('creds.json', "r") as file:
-    data = json.load(file)
-connection = DbConnection(data)
-#connection.database_insert_initial_data(csv_files)
-connection.print_sample_data()
-#connection.delete_all_data()'''
+'''import os
+from dotenv import load_dotenv
+load_dotenv()
+creds_data = {
+    'user': os.getenv('user'),
+    'password':os.getenv('password'),
+    'database':os.getenv('database')
+}
+
+connection = DbConnection(creds_data)
+print(f"TOP 5 MOVIES: \n{connection.top_5_movies()}")
+
+print(f"TOP 5 PEOPLE: \n{connection.top_5_people()}")'''
+

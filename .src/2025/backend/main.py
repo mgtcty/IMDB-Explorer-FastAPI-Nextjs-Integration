@@ -55,3 +55,13 @@ def get_movies_rating(item: Database_Selection):
         })
     
     return {'data': result}
+
+@app.get('/top5_people')
+def get_top5_people():
+    global GLOBAL_DB_CONNECTION
+    return GLOBAL_DB_CONNECTION.top_5_people()
+
+@app.get('/top5_movies')
+def get_top5_movies():
+    global GLOBAL_DB_CONNECTION
+    return GLOBAL_DB_CONNECTION.top_5_movies()

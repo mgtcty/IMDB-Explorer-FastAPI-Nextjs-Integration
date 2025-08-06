@@ -4,7 +4,6 @@ import React from "react";
 interface IsInPage {
   ActorProfile: boolean;
   MovieExplorer: boolean;
-  RatingDashboard: boolean;
   Home: boolean;
 }
 
@@ -27,7 +26,6 @@ const Header = (props: IsInPage) => {
       {link(!isInPage.Home, "/", "Home")}
       {link(!isInPage.MovieExplorer, "/MovieExplorer", "Movies")}
       {link(!isInPage.ActorProfile, "/ActorProfile", "Actors")}
-      {link(!isInPage.RatingDashboard, "/RatingDashboard", "Dashboard")}
     </div>
   );
 };

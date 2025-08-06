@@ -5,12 +5,7 @@ import Footer from "../globalComponents/footer";
 const MovieExplorer = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header
-        Home={false}
-        ActorProfile={false}
-        MovieExplorer={true}
-        RatingDashboard={false}
-      />
+      <Header Home={false} ActorProfile={false} MovieExplorer={true} />
 
       <main className="flex-1">MovieExplorer</main>
 
